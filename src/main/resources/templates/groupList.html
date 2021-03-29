@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Groups</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h3>Choose group</h3>
+<table border="1" cellpadding="15">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th> </th>
+    </tr>
+
+    <tr th:each="group : ${groups}">
+        <td th:utext="${group.name}"></td>
+        <td th:utext="${group.description}"></td>
+        <td><a th:href="@{/rental_car/client/cars/{carGroup}(carGroup=${group.id})}">сhoose</a></td>
+    </tr>
+</table>
+</body>
+</html>

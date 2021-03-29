@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Result</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1 th:align="center">Your order</h1>
+<form action="#" th:action="@{/rental_car/client/order/result}" method="post">
+    <p> FIO: <a th:utext="${order.client.fio}"></a></p>
+    <p> Status order: <a th:utext="${order.statusOrder.name}"></a></p>
+    <p> Status description: <a th:utext="${order.statusOrder.description}"></a></p>
+    <p> Cost: <a th:utext="${order.cost}"></a></p>
+    <p> Admin's comment: <a th:utext="${order.comment}"></a></p>
+
+    <p>Cost to pay: <input type="text" name="cost" th:value="${cost}" /></p>
+    <input type="hidden" name="orderID" th:value="${order.id}"/>
+
+    <p><input type="submit" name="action" value="Pay" />
+        <input type="submit" name="action" value="New order" /></p>
+</form>
+</body>
+</html>

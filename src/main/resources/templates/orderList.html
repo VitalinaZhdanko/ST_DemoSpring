@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h3>Orders</h3>
+<table border="1" cellpadding="15">
+    <tr>
+        <th>Client fio</th>
+        <th>Car brand</th>
+        <th>Car model</th>
+        <th>Car available</th>
+        <th>Date and time order</th>
+        <th>Cost</th>
+        <th>Start rent</th>
+        <th>Finish rent</th>
+        <th>Status</th>
+        <th>Comment</th>
+        <th> </th>
+    </tr>
+
+    <tr th:each="order : ${orders}">
+        <td th:utext="${order.client.fio}"></td>
+        <td th:utext="${order.car.carBrand.name}"></td>
+        <td th:utext="${order.car.name}"></td>
+        <td th:utext="${order.car.available}"></td>
+        <td th:utext="${order.orderDateTime}"></td>
+        <td th:utext="${order.cost}"></td>
+        <td th:utext="${order.startRent}"></td>
+        <td th:utext="${order.finishRent}"></td>
+        <td th:utext="${order.statusOrder.name}"></td>
+        <td th:utext="${order.comment}"></td>
+        <td><a th:href="@{/rental_car/admin/orders/{orderID}(orderID=${order.id})}">сhoose</a></td>
+    </tr>
+</table>
+</body>
+</html>

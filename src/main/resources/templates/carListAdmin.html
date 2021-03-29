@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+</head>
+<body>
+<h3>Arrange insurance claim</h3>
+<table border="1" cellpadding="15">
+    <tr>
+        <th>Group</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Number</th>
+        <th>WIN</th>
+        <th>Year of release</th>
+        <th>Cost minute</th>
+        <th>Available</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Technical inspection number</th>
+        <th>Date of issue</th>
+        <th>Validity period</th>
+        <th>Insurance policy number</th>
+        <th>Date of issue</th>
+        <th>Validity period</th>
+        <th> </th>
+    </tr>
+
+    <tr th:each="car : ${cars}">
+        <td th:utext="${car.carGroup.name}"></td>
+        <td th:utext="${car.carBrand.name}"></td>
+        <td th:utext="${car.name}"></td>
+        <td th:utext="${car.number}"></td>
+        <td th:utext="${car.winNumber}"></td>
+        <td th:utext="${car.yearOfRelease}"></td>
+        <td th:utext="${car.costMinute}"></td>
+        <td th:utext="${car.available}"></td>
+        <td th:utext="${car.carStatus.name}"></td>
+        <td th:utext="${car.carStatus.description}"></td>
+        <td th:utext="${car.technicalInspection.number}"></td>
+        <td th:utext="${car.technicalInspection.dateOfIssue}"></td>
+        <td th:utext="${car.technicalInspection.validityPeriod}"></td>
+        <td th:utext="${car.insurancePolicy.number}"></td>
+        <td th:utext="${car.insurancePolicy.dateOfIssue}"></td>
+        <td th:utext="${car.insurancePolicy.validityPeriod}"></td>
+
+        <td><a th:href="@{/rental_car/admin/cars/{insPolicyID}(insPolicyID=${car.insurancePolicy.id})}">сhoose</a></td>
+
+    </tr>
+
+</table>
+</body>
+</html>

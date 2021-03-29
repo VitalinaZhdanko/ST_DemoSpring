@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Order</h1>
+<form action="#" th:action="@{/rental_car/client/order}" method="post">
+    <p>FIO: <input type="text" th:field="${client.fio}" /></p>
+    <p>Phone: <input type="text" th:field="${client.phoneNumber}" /></p>
+    <p>Email: <input type="text" th:field="${client.email}" /></p>
+    <p>Passport number: <input type="text" th:field="${client.passportNumber}" /></p>
+    <p>Identification number: <input type="text" th:field="${client.indentificationNumber}" /></p>
+    <p>Date of issue: <input type="date" th:field="${client.dateOfIssue}" /></p>
+    <p>Validity period:<input type="text" th:field="${client.validityPeriod}" /></p>
+    <p>Issued by whom:<input type="text" th:field="${client.issuedByWhom}" /></p>
+    <p>Residence address:<input type="text" th:field="${client.residenceAddress}" /></p>
+    <p>License number:<input type="text" th:field="${drivingLicense.number}" /></p>
+    <p>License category: <input type="text" th:field="${drivingLicense.category}" /></p>
+    <p>License date of issue: <input type="date" th:field="${drivingLicense.dateOfIssue}" /></p>
+    <p>License validity period: <input type="text" th:field="${drivingLicense.validityPeriod}" /></p>
+    <p>Date and time start rent: <input type="datetime-local" name="startRent" th:value="${startRent}"/></p>
+    <p>Date and time finish rent: <input type="datetime-local" name="finishRent" th:value="${finishRent}"/></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>

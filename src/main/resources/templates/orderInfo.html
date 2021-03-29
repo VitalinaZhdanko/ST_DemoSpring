@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Order info</h1>
+<form action="#" th:action="@{/rental_car/admin/orders/orderInfo}" method="post">
+    <p> FIO: <a th:utext="${client.fio}"></a></p>
+    <p> Phone: <a th:utext="${client.phoneNumber}"></a></p>
+    <p> Email: <a th:utext="${client.email}"></a></p>
+    <p> Passport number: <a th:utext="${client.passportNumber}"></a></p>
+    <p> Identification number: <a th:utext="${client.indentificationNumber}"></a></p>
+    <p> Date of issue: <a th:utext="${client.dateOfIssue}"></a></p>
+    <p> Validity period: <a th:utext="${client.validityPeriod}"></a></p>
+    <p> Issued by whom: <a th:utext="${client.issuedByWhom}"></a></p>
+    <p> Residence address: <a th:utext="${client.residenceAddress}"></a></p>
+    <p> Driving license number: <a th:utext="${drivingLicense.number}"></a></p>
+    <p> Driving license category: <a th:utext="${drivingLicense.category}"></a></p>
+    <p> Date of issue: <a th:utext="${drivingLicense.dateOfIssue}"></a></p>
+    <p> Validity period: <a th:utext="${drivingLicense.validityPeriod}"></a></p>
+
+    <p>Comment: <input type="text" name="comment" th:value="${comment}" /></p>
+
+    <input type="hidden" name="orderID" th:value="${order.id}"/>
+
+    <p><input type="submit" name="action" value="Submit" />
+        <input type="submit" name="action" value="Decline" /></p>
+</form>
+</body>
+</html>

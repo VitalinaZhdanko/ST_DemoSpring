@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insurance claims</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h3 th:align="center">Insurance claims</h3>
+<a th:href="@{/rental_car/admin/cars}">Back</a>
+<table border="1" cellpadding="15">
+    <tr>
+        <th>Insurance policy number</th>
+        <th>Insurance policy date</th>
+        <th>Insurance policy validity period</th>
+        <th>Insurance claim name</th>
+        <th>Insurance claim description</th>
+        <th>Insurance claim date</th>
+        <th> </th>
+    </tr>
+
+    <tr th:each="insuranceClaim : ${insuranceClaimList}">
+        <td th:utext="${insuranceClaim.insurancePolicy.number}"></td>
+        <td th:utext="${insuranceClaim.insurancePolicy.dateOfIssue}"></td>
+        <td th:utext="${insuranceClaim.insurancePolicy.validityPeriod}"></td>
+        <td th:utext="${insuranceClaim.name}"></td>
+        <td th:utext="${insuranceClaim.description}"></td>
+        <td th:utext="${insuranceClaim.dateTime}"></td>
+        <td><a th:href="@{/rental_car/client/cars}">сhoose</a></td>
+    </tr>
+</table>
+
+<h3 th:align="center">Arrange insurance claim</h3>
+<form action="#" th:action="@{/rental_car/admin/cars/insuranceClaim}" method="post">
+    <p>Name: <input type="text" th:field="${insuranceClaim.name}" /></p>
+    <p>Description: <input type="text" th:field="${insuranceClaim.description}" /></p>
+    <p>Date and time: <input type="text" th:field="${insuranceClaim.dateTime}" /></p>
+
+    <input type="hidden" name="insPolicyID" th:value="${insPolicyID}"/>
+    <p>car isn't available: <input type="checkbox" name="available" th:checked="*{available}" /></p>
+    <p><input type="submit" value="Submit" />
+        <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
