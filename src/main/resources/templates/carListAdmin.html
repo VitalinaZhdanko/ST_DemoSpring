@@ -49,7 +49,11 @@
         <td><a th:href="@{/rental_car/admin/cars/{insPolicyID}(insPolicyID=${car.insurancePolicy.id})}">сhoose</a></td>
 
     </tr>
-
 </table>
+<div th:align="center">
+    <a th:each="pageNumber : ${pageNumbers}">
+        <a class="page-link" th:href="@{|/rental_car/admin/cars/page/${pageNumber}|}" th:text="${pageNumber}"></a>
+    </a>
+</div>
 </body>
 </html>

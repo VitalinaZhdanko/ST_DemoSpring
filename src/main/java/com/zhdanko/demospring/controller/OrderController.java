@@ -51,7 +51,6 @@ public class OrderController {
 
     @GetMapping("/order/{carID}")
     public String orderForm(@PathVariable int carID, Model model) {
-        carRepository.updateAvailable(false, carID);
 
         car.setId(carID);
 
@@ -65,23 +64,35 @@ public class OrderController {
 
     @PostMapping("/order")
     public String orderSubmit(@ModelAttribute Client client, @ModelAttribute DrivingLicense drivingLicense, @RequestParam String startRent, @RequestParam String finishRent, Model model) {
-        clientRepository.save(client);
+        if (!client.getFio().isEmpty() && !client.getEmail().isEmpty() && !client.getPhoneNumber().isEmpty() &&
+                !client.getPassportNumber().isEmpty() && !client.getIndentificationNumber().isEmpty() &&
+                client.getValidityPeriod() >= 0 && !client.getIssuedByWhom().isEmpty() && !client.getResidenceAddress().isEmpty() &&
+                !drivingLicense.getNumber().isEmpty() && !drivingLicense.getCategory().isEmpty() &&
+                drivingLicense.getValidityPeriod() >= 0) {
 
-        drivingLicense.setClient(client);
-        drivingLicenseRepository.save(drivingLicense);
+            carRepository.updateAvailable(false, car.getId());
+            clientRepository.save(client);
 
-        clientOrder.setOrderDateTime(new Timestamp(new Date().getTime()));
-        clientOrder.setStartRent(new Timestamp(Util.convertToDateTime(startRent).getTime()));
-        clientOrder.setFinishRent(new Timestamp(Util.convertToDateTime(finishRent).getTime()));
-        clientOrder.setCar(carRepository.findById(car.getId()).get());
-        clientOrder.setCost(Util.getTotalCost(Util.convertToDateTime(startRent), Util.convertToDateTime(finishRent), carRepository.findById(car.getId()).get().getCostMinute()));
-        clientOrder.setClient(client);
-        clientOrder.setManager(managerRepository.findById(2).get());
-        clientOrder.setStatusOrder(statusOrderRepository.findById(1).get());
+            drivingLicense.setClient(client);
+            drivingLicenseRepository.save(drivingLicense);
 
-        orderRepository.save(clientOrder);
+            clientOrder.setOrderDateTime(new Timestamp(new Date().getTime()));
+            clientOrder.setStartRent(new Timestamp(Util.convertToDateTime(startRent).getTime()));
+            clientOrder.setFinishRent(new Timestamp(Util.convertToDateTime(finishRent).getTime()));
+            clientOrder.setCar(carRepository.findById(car.getId()).get());
+            clientOrder.setCost(Util.getTotalCost(Util.convertToDateTime(startRent), Util.convertToDateTime(finishRent), carRepository.findById(car.getId()).get().getCostMinute()));
+            clientOrder.setClient(client);
+            clientOrder.setManager(managerRepository.findById(2).get());
+            clientOrder.setStatusOrder(statusOrderRepository.findById(1).get());
 
-        return "redirect:order/result/" + clientOrder.getId();
+            orderRepository.save(clientOrder);
+
+            return "redirect:order/result/" + clientOrder.getId();
+        } else {
+            model.addAttribute("message", "Empty field");
+            return "error";
+        }
+
     }
 
     @GetMapping("/order/result/{clientOrderID}")

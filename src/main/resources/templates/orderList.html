@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Orders</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
@@ -19,7 +19,7 @@
         <th>Finish rent</th>
         <th>Status</th>
         <th>Comment</th>
-        <th> </th>
+        <th></th>
     </tr>
 
     <tr th:each="order : ${orders}">
@@ -36,5 +36,11 @@
         <td><a th:href="@{/rental_car/admin/orders/{orderID}(orderID=${order.id})}">сhoose</a></td>
     </tr>
 </table>
+
+<div th:align="center">
+    <a th:each="pageNumber : ${pageNumbers}">
+        <a class="page-link" th:href="@{|/rental_car/admin/orders/page/${pageNumber}|}" th:text="${pageNumber}"></a>
+    </a>
+</div>
 </body>
 </html>

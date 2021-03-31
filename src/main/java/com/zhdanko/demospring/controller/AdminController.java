@@ -14,6 +14,8 @@ import com.zhdanko.demospring.repository.OrderRepository;
 import com.zhdanko.demospring.repository.StatusCarRepository;
 import com.zhdanko.demospring.repository.StatusOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class AdminController {
@@ -63,14 +67,18 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/rental_car/admin/orders")
-    public String getAllOrders(Model model) {
+    @GetMapping("/rental_car/admin/orders/page/{page}")
+    public String getAllOrders(@PathVariable("page") int page, Model model) {
         try {
-            List<ClientOrder> clientOrderList = new ArrayList<>();
+            PageRequest pageable = PageRequest.of(page - 1, 3);
+            Page<ClientOrder> orderPage = orderRepository.findAll(pageable);
+            int totalPages = orderPage.getTotalPages();
 
-            clientOrderList.addAll(orderRepository.findAll());
-
-            model.addAttribute("orders", clientOrderList);
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
+            model.addAttribute("orders", orderPage.getContent());
 
             return "orderList";
         } catch (Exception ex) {
@@ -102,24 +110,28 @@ public class AdminController {
         if (action.equals("Submit")) {
             orderRepository.updateStatusByOrderID(statusOrderRepository.findById(2).get(), orderID);
         }
-        if (action.equals("Decline")) {
+        if (action.equals("Decline") && !comment.isEmpty()) {
             carRepository.updateAvailable(true, orderRepository.findById(orderID).get().getCar().getId());
             orderRepository.updateStatusByOrderID(statusOrderRepository.findById(3).get(), orderID);
 
             orderRepository.updateCommentByOrderID(comment, orderID);
         }
 
-        return "redirect:/rental_car/admin/orders";
+        return "redirect:/rental_car/admin/orders/page/1";
     }
 
-    @GetMapping("/rental_car/admin/cars")
-    public String getAllCars(Model model) {
+    @GetMapping("/rental_car/admin/cars/page/{page}")
+    public String getAllCars(@PathVariable("page") int page, Model model) {
         try {
-            List<Car> carList = new ArrayList<>();
+            PageRequest pageable = PageRequest.of(page - 1, 3);
+            Page<Car> carPage = carRepository.findAll(pageable);
+            int totalPages = carPage.getTotalPages();
 
-            carList.addAll(carRepository.findAll());
-
-            model.addAttribute("cars", carList);
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
+            model.addAttribute("cars", carPage.getContent());
 
             return "carListAdmin";
         } catch (Exception ex) {

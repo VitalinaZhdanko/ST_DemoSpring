@@ -2,6 +2,8 @@ package com.zhdanko.demospring.repository;
 
 import com.zhdanko.demospring.entities.ClientOrder;
 import com.zhdanko.demospring.entities.StatusOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +21,8 @@ public interface OrderRepository extends JpaRepository<ClientOrder, Integer> {
     @Query("update ClientOrder o set o.comment=:comment where o.id=:id")
     @Transactional
     int updateCommentByOrderID(@Param("comment") String comment, @Param("id") int id);
+
+    Page<ClientOrder> findAll(Pageable pageable);
 
     void deleteClientOrderById(int orderID);
 }

@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/rental_car/client/groups", "/rental_car/client/cars/{carGroupID}", "/rental_car/client/order/{carID}", "/rental_car/client/order", "/rental_car/client/order/result", "/rental_car/client/order/result/{clientOrderID}").permitAll()
-                .antMatchers("/rental_car/admin/", "/rental_car/admin/orders", "/rental_car/admin/cars", "/rental_car/admin/orders/{orderID}", "/rental_car/admin/orders/orderInfo").hasAnyRole("ADMIN")
+                .antMatchers("/rental_car/admin/", "/rental_car/admin/orders/page/{page}", "/rental_car/admin/cars/page/{page}", "/rental_car/admin/orders/{orderID}", "/rental_car/admin/orders/orderInfo").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

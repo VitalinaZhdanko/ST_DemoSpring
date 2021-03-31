@@ -3,6 +3,8 @@ package com.zhdanko.demospring.repository;
 import com.zhdanko.demospring.entities.Car;
 import com.zhdanko.demospring.entities.CarGroup;
 import com.zhdanko.demospring.entities.CarStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +29,5 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Transactional
     int updateStatusCar(@Param("status") CarStatus status, @Param("id") int id);
 
+    Page<Car> findAll(Pageable pageable);
 }
